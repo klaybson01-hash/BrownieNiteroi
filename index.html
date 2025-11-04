@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Minha Loja</title>
+  <style>
+    body { font-family: system-ui, Arial, sans-serif; margin: 0; background:#fafafa; color:#222; }
+    header { background:#0e8f57; color:#fff; padding:16px; }
+    .container { max-width: 980px; margin: 0 auto; padding: 16px; }
+    .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); }
+    .card { background:#fff; border:1px solid #eee; border-radius:10px; padding:16px; }
+    .card h3 { margin: 0 0 8px; }
+    .price { font-weight: 700; margin: 8px 0; }
+    button { background:#0e8f57; color:#fff; border:0; padding:10px 12px; border-radius:8px; cursor:pointer;}
+    button:disabled { opacity:.6; cursor:not-allowed;}
+    .cart { position: sticky; top: 12px; background:#fff; border:1px solid #eee; border-radius:12px; padding:16px; }
+    .cart h2 { margin-top:0; }
+    .cart-item { display:flex; justify-content:space-between; gap:8px; border-bottom:1px dashed #eee; padding:6px 0;}
+    .row { display:flex; gap:16px; align-items:flex-start; }
+    .muted { color:#666; font-size: 0.9rem; }
+    footer { padding: 16px; text-align:center; color:#666; }
+    .qty { display:flex; gap:6px; align-items:center;}
+    .qty button { width:28px; height:28px; padding:0; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Minha Loja</h1>
+      <p class="muted">Escolha seus produtos e finalize pelo WhatsApp.</p>
+    </div>
+  </header>
+
+  <div class="container row">
+    <main style="flex:2">
+      <h2>Produtos</h2>
+      <div class="grid" id="product-list"></div>
+    </main>
+
+    <aside class="cart" style="flex:1; min-width:300px">
+      <h2>Carrinho</h2>
+      <div id="cart-items" class="muted">Seu carrinho está vazio.</div>
+      <div style="margin-top:12px">
+        <div class="muted" id="subtotal-line">Subtotal: R$ 0,00</div>
+        <div class="muted" id="frete-line">Frete: calcular no WhatsApp</div>
+        <div style="font-size:1.1rem; font-weight: 700; margin-top:8px" id="total-line">Total: R$ 0,00</div>
+      </div>
+      <button id="whatsapp-btn" style="width:100%; margin-top:12px" disabled>Finalizar no WhatsApp</button>
+      <p class="muted" style="margin-top:8px">Após clicar, abriremos o WhatsApp com o resumo do pedido.</p>
+    </aside>
+  </div>
+
+  <footer>
+    © <span id="year"></span> Minha Loja — Atendemos via WhatsApp
+  </footer>
+
+<script>
+const PHONE = "5521999999999"; // <-- SUBSTITUA PELO SEU NÚMERO (55 + DDD + número, só dígitos)
+
+const products = [
+  { id: 1, name: "Camiseta Básica", price: 49.9, sku: "CAM-001" },
+  { id: 2, name: "Boné Snapback", price: 69.9, sku: "BON-101" },
+  { id: 3, name: "Mochila Urbana", price: 149.0, sku: "MOC-305" },
+  { id: 4, name: "Garrafa Térmica", price: 89.9, sku: "GAR-220" },
+];
+
+const state = {
+  cart: {} // { productId: {qty, product} }
+};
+
+function formatBRL(v){ return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+
+function renderProducts(){
+  const list = document.getElementById('product-list');
+  list.innerHTML = '';
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <h3>${p.name}</h3>
+      <div class="muted">SKU: ${p.sku}</div>
+      <div class="price">${formatBRL(p.price)}</div>
+      <button data-id="${p.id}">Adicionar</button>
+    `;
+    card.querySelector('button').addEventListener('click', () => addToCart(p.id));
+    list.appendChild(card);
+  });
+}
+
+function addToCart(id){
+  const product = products.find(p => p.id === id);
+  if(!state.cart[id]) state.cart[id] = { qty: 0, product };
+  state.cart[id].qty += 1;
+  renderCart();
+}
+
+function changeQty(id, delta){
+  if(!state.cart[id]) return;
+  state.cart[id].qty += delta;
+  if(state.cart[id].qty <= 0) delete state.cart[id];
+  renderCart();
+}
+
+function getTotals(){
+  const items = Object.values(state.cart);
+  const subtotal = items.reduce((acc, it) => acc + it.qty * it.product.price, 0);
+  return { subtotal, total: subtotal }; // frete calculado no WhatsApp
+}
+
+function renderCart(){
+  const container = document.getElementById('cart-items');
+  const btn = document.getElementById('whatsapp-btn');
+  const { subtotal, total } = getTotals();
+
+  if(Object.keys(state.cart).length === 0){
+    container.textContent = 'Seu carrinho está vazio.';
+    btn.disabled = true;
+  } else {
+    container.innerHTML = '';
+    Object.values(state.cart).forEach(({qty, product}) => {
+      const row = document.createElement('div');
+      row.className = 'cart-item';
+      row.innerHTML = `
+        <div>
+          <div><strong>${product.name}</strong> <span class="muted">(${product.sku})</span></div>
+          <div class="muted">${qty} x ${formatBRL(product.price)}</div>
+        </div>
+        <div class="qty">
+          <button aria-label="diminuir" onclick="changeQty(${product.id}, -1)">−</button>
+          <span>${qty}</span>
+          <button aria-label="aumentar" onclick="changeQty(${product.id}, 1)">+</button>
+        </div>
+      `;
+      container.appendChild(row);
+    });
+    btn.disabled = false;
+  }
+
+  document.getElementById('subtotal-line').textContent = `Subtotal: ${formatBRL(subtotal)}`;
+  document.getElementById('total-line').textContent = `Total: ${formatBRL(total)}`;
+}
+
+function buildWhatsappText(){
+  const items = Object.values(state.cart);
+  if(items.length === 0) return "Olá! Gostaria de finalizar um pedido. (Carrinho vazio)";
+
+  const linhas = [];
+  linhas.push("*Novo pedido via site*");
+  linhas.push("");
+  linhas.push("*Itens:*");
+  items.forEach(({qty, product}) => {
+    const parcial = formatBRL(qty * product.price);
+    linhas.push(`• ${product.name} (${product.sku}) — ${qty} x ${formatBRL(product.price)} = ${parcial}`);
+  });
+  const { subtotal, total } = getTotals();
+  linhas.push("");
+  linhas.push(`Subtotal: ${formatBRL(subtotal)}`);
+  linhas.push(`Frete: a combinar`);
+  linhas.push(`Total: ${formatBRL(total)} (sem frete)`);
+  linhas.push("");
+  linhas.push("Nome: ");
+  linhas.push("Endereço (p/ calcular frete): ");
+  linhas.push("Forma de pagamento preferida: PIX / Cartão / Dinheiro");
+  return linhas.join("\n");
+}
+
+function openWhatsapp(){
+  const text = encodeURIComponent(buildWhatsappText());
+  const url = `https://wa.me/${PHONE}?text=${text}`;
+  window.open(url, '_blank');
+}
+
+document.getElementById('whatsapp-btn').addEventListener('click', openWhatsapp);
+document.getElementById('year').textContent = new Date().getFullYear();
+renderProducts();
+renderCart();
+</script>
+</body>
