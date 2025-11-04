@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Minha Loja</title>
+  <title>Brownie Niterói</title>
   <style>
     body { font-family: system-ui, Arial, sans-serif; margin: 0; background:#fafafa; color:#222; }
-    header { background:#0e8f57; color:#fff; padding:16px; }
+    header { background:#FF0000; color:#fff; padding:16px; }
     .container { max-width: 980px; margin: 0 auto; padding: 16px; }
     .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); }
     .card { background:#fff; border:1px solid #eee; border-radius:10px; padding:16px; }
@@ -18,8 +18,8 @@
     .cart h2 { margin-top:0; }
     .cart-item { display:flex; justify-content:space-between; gap:8px; border-bottom:1px dashed #eee; padding:6px 0;}
     .row { display:flex; gap:16px; align-items:flex-start; }
-    .muted { color:#666; font-size: 0.9rem; }
-    footer { padding: 16px; text-align:center; color:#666; }
+    .muted { color:#7:52 04/11/2025; font-size: 0.9rem; }
+    footer { padding: 16px; text-align:center; color:#vermelho; }
     .qty { display:flex; gap:6px; align-items:center;}
     .qty button { width:28px; height:28px; padding:0; }
   </style>
@@ -27,7 +27,7 @@
 <body>
   <header>
     <div class="container">
-      <h1>Minha Loja</h1>
+      <h1>Brownie Niterói</h1>
       <p class="muted">Escolha seus produtos e finalize pelo WhatsApp.</p>
     </div>
   </header>
@@ -52,18 +52,20 @@
   </div>
 
   <footer>
-    © <span id="year"></span> Minha Loja — Atendemos via WhatsApp
+    © <span id="year"></span> Brownie Niterói — Atendemos via WhatsApp
   </footer>
 
 <script>
-const PHONE = "5521999999999"; // <-- SUBSTITUA PELO SEU NÚMERO (55 + DDD + número, só dígitos)
+const PHONE = "+5521976276453"; // <-- SUBSTITUA PELO SEU NÚMERO (55 + DDD + número, só dígitos)
+
 
 const products = [
-  { id: 1, name: "Camiseta Básica", price: 49.9, sku: "CAM-001" },
-  { id: 2, name: "Boné Snapback", price: 69.9, sku: "BON-101" },
-  { id: 3, name: "Mochila Urbana", price: 149.0, sku: "MOC-305" },
-  { id: 4, name: "Garrafa Térmica", price: 89.9, sku: "GAR-220" },
+  { id: 1, name: "Brownie Tradicional (80g)", price: 6, sku: "BWN-TRAD" },
+  { id: 2, name: "Brownie com Nozes (80g)",   price: 7, sku: "BWN-NOZ"  },
+  { id: 3, name: "Brownie Doce de Leite (80g)", price: 7, sku: "BWN-DL" },
+  { id: 4, name: "Combo 6 unidades",          price: 30, sku: "BWN-CMB6"},
 ];
+
 
 const state = {
   cart: {} // { productId: {qty, product} }
@@ -177,5 +179,3 @@ renderProducts();
 renderCart();
 </script>
 </body>
-
-
