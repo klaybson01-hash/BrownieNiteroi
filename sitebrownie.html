@@ -1,0 +1,483 @@
+<style>
+    body {
+      font-family: system-ui, Arial, sans-serif;
+      background:#ffeed0;
+      margin:6px;
+      padding:20px;
+    }
+
+    h1 { color:#863c26; margin:10px; font-size: 30px; } 
+    h2 { color:#f69b7d; margin:12px; font-size: 40px;}
+    h4 { color:#f69b7d; margin:12px; font-size: 30px;}
+    h5 { color:#f69b7d; margin:12px; font-size: 20px;}
+    h6 { color:#863c26; margin:10px; font-size: 12px; }
+
+    /* 🔥 Aqui ajustamos GRID lado a lado */
+    .products-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    /* 🔥 Tamanho solicitado: 348px x 123px */
+    .product {
+      width: 358px;
+      height: 123px;
+      background:white;
+      padding:10px;
+      border-radius:10px;
+      border:1px solid #ddd;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-sizing: border-box;
+    }
+
+    .product img {
+      height: 100px;
+      width: 100px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .product-info {
+      width: 220px;
+    }
+
+    .product h3 {
+      margin: 0;
+      font-size: 16px;
+    }
+
+    .product p {
+      margin: 3px 0;
+      font-size: 14px;
+    }
+
+    .cart {
+      position: fixed;
+      right: 20px;
+      top: 20px;
+      width: 300px;
+
+      background: white;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #ddd; 
+
+
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 999;
+    }
+
+    button {
+      background:#0e8f57;
+      color:white;
+      border:0;
+      padding:8px 14px;
+      border-radius:8px;
+      cursor:pointer;
+      font-size: 14px;
+    }
+
+    button:hover { opacity:0.8; }.product {
+  width: 358px;
+  background:white;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #ddd;
+  box-sizing: border-box;
+}
+
+.product-info h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.product-info p {
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+.product-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.btn-add, .btn-remove {
+  width: 40px;
+  height: 50px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 2px solid;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.btn-add {
+  border-color: #0e8f57;
+  color: #0e8f57;
+  background: white;
+}
+
+.btn-remove {
+  border-color: #d63031;
+  color: #d63031;
+  background: white;
+}
+</style>
+</head>
+<body>
+
+<h2>Brownie Niterói   </h2>
+<h4>
+  <a href="https://www.instagram.com/brownieniteroi" 
+     target="_blank" 
+     style="color:#f69b7d; text-decoration:none;">
+     @brownieniteroi
+  </a>
+</h4>
+
+<!-- 10 PRODUTOS -->
+<!-- ============================
+     Brownies 6x6
+============================ -->
+<h1>Brownie 6cm — R$ 7,00 cada</h1>
+<img src="C:\Users\q\Desktop\Brownie\Fotos e Videos\docedeleite001.jpg" width="220" height="100" object-fit: "cover">
+
+<div class="product">
+  <div class="product-info">
+    <h3>Chocolate Branco</h3>
+    <p>R$ 7,00</p>
+  </div>
+
+    <div class="product-buttons">
+    <button onclick="addToCart('Choc. Branco', 7)">+</button>
+    <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Choc. Branco')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Choc. Branco c/ Nutella</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Choc. Branco c/ Nutella', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Choc. Branco c/ Nutella')">-</button>
+ </div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Ninho</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Ninho', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Ninho')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Ninho c/ Nutella</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Ninho c/ Nutella', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Ninho c/ Nutella')">-</button>
+</div>
+</div>
+
+<div class="product">
+  <div class="product-info">
+  <h3>Doce de leite</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Doce de leite', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Doce de leite')">-</button>
+</div>
+</div>
+
+<div class="product">
+  <div class="product-info">
+  <h3>Prestigio</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Prestigio', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Prestigio')">-</button>
+</div>
+</div>
+
+<div class="product">
+  <div class="product-info">
+  <h3>Cappuccino</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Cappuccino', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Cappuccino')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Brigadeiro</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Brigadeiro', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Brigadeiro')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Nozes</h3>
+  <p>R$ 7,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Nozes', 7)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Nozes')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Gotas de Chocolate</h3>
+  <p>R$ 6,00</p>
+ </div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Gotas de Chocolate', 6)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Gotas de Chocolate')">-</button>
+</div>
+</div>
+
+<!-- ============================
+     COPO DA FELICIDADE
+============================ -->
+<h1>Copo da Felicidade 250ml — R$ 25,00 cada</h1>
+<img src="C:\Users\q\Desktop\Brownie\Fotos e Videos\copo felicidade001 - Copia.jpg" width="220" height="100" object-fit: "cover">
+
+<div class="product">
+<div class="product-info">
+  <h3>Ninho com Nutella</h3>
+  <p>R$ 25,00</p>
+</div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Copo da Felicidade — Ninho com Nutella', 25)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Copo da Felicidade — Ninho com Nutella')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Ninho com Brigadeiro</h3>
+  <p>R$ 25,00</p>
+</div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Copo da Felicidade — Ninho com Brigadeiro', 25)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Copo da Felicidade — Ninho com Brigadeiro')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>Chocolate Branco com Nutella</h3>
+  <p>R$ 25,00</p>
+</div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Copo da Felicidade — Choc. Branco com Nutella', 25)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Copo da Felicidade — Choc. Branco com Nutella')">-</button>
+</div>
+</div>
+<!-- ============================
+     Mini Brownies 3x3
+============================ -->
+<h1>Mini Brownie 3cm </h1>
+<img src="C:\Users\q\Desktop\Brownie\Fotos e Videos\minibrownie002.jpg" width="220" height="100" object-fit: "cover">
+<div class="product">
+<div class="product-info">
+  <h3>20 Mini Brownies</h3>
+  <p>R$ 50,00</p>
+</div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Mini20', 50)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Mini20')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3>50 Mini Brownies</h3>
+  <p>R$ 100,00</p>
+</div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Mini50', 100)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Mini50')">-</button>
+</div>
+</div>
+
+<div class="product">
+<div class="product-info">
+  <h3> 100 Mini Brownies</h3>
+  <p>R$ 180,00</p>
+</div>
+
+    <div class="product-buttons">
+  <button onclick="addToCart('Mini100', 180)">+</button>
+  <button style="background:#d63031; margin-top:5px;" onclick="removeFromCart('Mini100')">-</button>
+</div>
+</div>
+<!-- CARRINHO -->
+<div class="cart">
+  <h2>Seu Carrinho</h2>
+  <ul id="cart-list"></ul>
+  <p><strong>Total:</strong> R$ <span id="cart-total">0,00</span></p>
+<label><strong>Nome:</strong></label>
+<input id="client-name" type="text" placeholder="Seu nome" 
+       style="width:100%; padding:6px; margin:5px 0 10px; border-radius:6px; border:1px solid #ccc;">
+
+<label><strong>Endereço:</strong></label>
+<input id="client-address" type="text" placeholder="Seu endereço OU Retirada"
+       style="width:100%; padding:6px; margin:5px 0 10px; border-radius:6px; border:1px solid #ccc;">
+
+  <button onclick="checkout()">Finalizar Pedido pelo WhatsApp</button>
+  <button style="background:#d63031; margin-left:10px;" onclick="clearCart()">Esvaziar Carrinho</button>
+<h5>Obs: O total do pedido não esta calculado com frete, coloque seus dados para o cálculo.</h5>
+<h6>Retirada: Niterói - Cafuba.</h6>
+
+</div>
+
+<script>
+  const brownie6cm = [
+  'Choc. Branco',
+  'Choc. Branco c/ Nutella',
+  'Ninho',
+  'Ninho c/ Nutella',
+  'Doce de leite',
+  'Prestigio',
+  'Cappuccino',
+  'Brigadeiro',
+  'Nozes'
+];
+
+function applyCombo() {
+  const totalBrownies = cart
+    .filter(item => brownie6cm.includes(item.name))
+    .reduce((sum, item) => sum + item.quantity, 0);
+
+  const newPrice = totalBrownies >= 10 ? 6 : 7;
+
+  cart = cart.map(item => {
+    if (brownie6cm.includes(item.name)) {
+      return { ...item, price: newPrice };
+    }
+    return item;
+  });
+}
+
+let cart = [];
+
+  function addToCart(name, price) {
+  const item = cart.find(i => i.name === name);
+  if (item) {
+    item.quantity++;
+  } else {
+    cart.push({ name, price, quantity: 1 });
+  }
+
+  applyCombo();
+  renderCart();
+}
+
+
+function removeFromCart(name) {
+  const item = cart.find(i => i.name === name);
+  if (!item) return;
+
+  if (item.quantity > 1) {
+    item.quantity--;
+  } else {
+    cart = cart.filter(i => i.name !== name);
+  }
+
+  applyCombo();
+  renderCart();
+}
+  function renderCart() {
+    const list = document.getElementById("cart-list");
+    const totalSpan = document.getElementById("cart-total");
+
+    list.innerHTML = "";
+    let total = 0;
+
+    cart.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.quantity}x ${item.name} — R$ ${(item.price * item.quantity).toFixed(2)}`;
+      list.appendChild(li);
+      total += item.price * item.quantity;
+    });
+
+    totalSpan.textContent = total.toFixed(2).replace(".", ",");
+  }
+
+  function checkout() {
+  if (cart.length === 0) {
+    alert("Carrinho vazio!");
+    return;
+  }
+
+  const name = document.getElementById("client-name").value.trim();
+  const address = document.getElementById("client-address").value.trim();
+
+  let msg = "";
+
+  // 🟢 Inserir nome e endereço caso existam
+  if (name !== "") msg += `Meu nome é ${name}. `;
+  if (address !== "") msg += `Meu endereço é ${address}. `;
+
+  // pular linha se algum dos dois existir
+  if (msg !== "") msg += "%0A%0A";
+
+  msg += "Olá! Quero fazer um pedido:%0A%0A";
+
+  cart.forEach(item => {
+    msg += `• ${item.quantity}x ${item.name} — R$ ${(item.price * item.quantity).toFixed(2)}%0A`;
+  });
+
+  const total = cart.reduce((t, i) => t + i.price * i.quantity, 0);
+
+  msg += `%0ATotal do pedido: R$ ${total.toFixed(2)}`;
+
+  const whatsapp = "5521976276453";
+  const url = `https://wa.me/${whatsapp}?text=${msg}`;
+
+  window.open(url, "_blank");
+}
+    function clearCart() { 
+    cart = [];
+    renderCart();
+}
+
+</script>
+
+</body>
